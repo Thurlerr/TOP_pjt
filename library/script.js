@@ -23,9 +23,25 @@ addBookToLibrary("gabo", "fred0", 100, "nao lido")
 addBookToLibrary("jog", "urgo", 50, "nao lido")
 // console.log(myBooks[1])
 
-function displayBooks (){
-    myBooks.forEach((el) => 
-        console.log(el.info()))
-}
+//colocar cada elemento do array em um nó da DOM
+const container = document.querySelector(".table-data")
 
-displayBooks()
+function displayBooksOnDom (){
+    myBooks.forEach((el) => {
+    const tableRow = document.createElement("tr")
+    //criar um loop para cada elemento do objeto pertencer a uma td?
+    //dentro do loop, cada td vai conter o valor de uma chave desse objeto armazenado no array
+    //preciso saber como fazer a chave mudar a cada iteração do loop
+    for (i = 0; i < 4; i++){
+        const rowContent = document.createElement("td")
+        rowContent.textContent = el.
+    }
+    //talvez essa linha de código nesse lugar seja util no futuro -> p.classList.add("classeDesejada")
+    content.textContent = `${el.info()}`
+    container.appendChild(content)
+})};
+
+displayBooksOnDom()
+
+//query selector, element creator, append element
+

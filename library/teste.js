@@ -19,16 +19,21 @@
 //     })
 // })
 
-function Book (title, author, pages, status) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.status = status
-    this.info = function (){
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${this.status}`
-    }
-}
+// function Book (title, author, pages, status) {
+//     this.title = title
+//     this.author = author
+//     this.pages = pages
+//     this.status = status
+//     this.info = function (){
+//         return `${this.title} by ${this.author}, ${this.pages} pages, ${this.status}`
+//     }
+// }
 
-const livro = new Book ("auto", "drew", 10, "nao lido")
+// const livro = new Book ("auto", "drew", 10, "nao lido")
 
-console.log(livro)
+const button = document.querySelector("#addToLibraryBtn")
+
+button.addEventListener("click", () => {
+    const teste = document.querySelector("#status").checked
+    console.log(`debug ${teste}`)
+})

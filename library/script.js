@@ -16,32 +16,24 @@ function addBookToLibrary(title, author, pages, status){
 
 const myBooks = []
 
-// const tesouro = new Book("tesouro", "drew", 10, "lido")
-// console.log(tesouro.info())
 addBookToLibrary("tesouro", "paulo", 13, "nao lido")
 addBookToLibrary("gabo", "fred0", 100, "nao lido")
 addBookToLibrary("jog", "urgo", 50, "nao lido")
-// console.log(myBooks[1])
 
-//colocar cada elemento do array em um nó da DOM
-const container = document.querySelector(".table-data")
+const container = document.querySelector(".table")
 
 function displayBooksOnDom (){
-    myBooks.forEach((el) => {
-    const tableRow = document.createElement("tr")
-    //criar um loop para cada elemento do objeto pertencer a uma td?
-    //dentro do loop, cada td vai conter o valor de uma chave desse objeto armazenado no array
-    //preciso saber como fazer a chave mudar a cada iteração do loop
-    for (i = 0; i < 4; i++){
-        const rowContent = document.createElement("td")
-        rowContent.textContent = el.
-    }
+    myBooks.forEach((arrayElement) => {
+        const tableRow = document.createElement("tr") //cria table row para o objeto inteiro
+        Object.keys(arrayElement).forEach( (keys) => { //pega cada chave do elemento atual do array e itera
+            if (keys === "info") return //se for a funçao, early return
+            const rowContent = document.createElement("td") //cria table data
+            rowContent.innerText = arrayElement[keys] //coloca na table data o conteudo obj.chave
+            tableRow.appendChild(rowContent) //coloca a table data dentro da table row
+        })
+        container.appendChild(tableRow) //após o loop de percorrer o objeto inteiro, coloca essa tableRow dentro da .table
+        })
     //talvez essa linha de código nesse lugar seja util no futuro -> p.classList.add("classeDesejada")
-    content.textContent = `${el.info()}`
-    container.appendChild(content)
-})};
+}
 
 displayBooksOnDom()
-
-//query selector, element creator, append element
-

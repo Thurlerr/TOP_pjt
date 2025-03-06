@@ -1,8 +1,20 @@
-const winPatterns = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontais
-    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Verticais
-    [0, 4, 8], [2, 4, 6] // Diagonais
-];
 
-// Verifica se algum padrão de vitória está completo para "X"
-winPatterns.forEach(pattern => console.log(pattern))
+function createGameBoard(){
+    const gameBoard = []
+
+    for (let i = 0; i < 3; i++){
+        const row = []
+        for (let j = 0; j < 3; j++){
+            row.push(Cell())//preencher esse cara com cell, porque mais tarde cell recebe um X ou O,
+        }
+        gameBoard.push(row)
+    }
+
+    return gameBoard.map((row) => row.join("   | ")).join("\n-------------\n")
+}
+
+function Cell(token){ //refatorar pra ficar menor
+    return token
+}
+
+console.log(createGameBoard())

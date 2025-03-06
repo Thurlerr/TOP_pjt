@@ -1,17 +1,3 @@
-function createGameBoard(){
-    const gameBoard = []
-
-    for (let i = 0; i < 3; i++){
-        const row = []
-        for (let j = 0; j < 3; j++){
-            row.push(null)
-        }
-        gameBoard.push(row)
-    }
-
-    return gameBoard.map((row) => row.join("   | ")).join("\n-------------\n")
-}
-
 let player1 = ""
 let player2 = ""
 
@@ -20,16 +6,45 @@ const players = {
     nomeP1: player1,
     nomeP2: player2
 }
+function createGameBoard(){
+    const gameBoard = []
 
-const teste = createGameBoard()
-console.log(players)
+    for (let i = 0; i < 3; i++){
+        const row = []
+        for (let j = 0; j < 3; j++){
+            row.push(null)//preencher esse cara com cell, porque mais tarde cell recebe um X ou O,
+        }
+        gameBoard.push(row)
+    }
+
+    return gameBoard
+}
+
+function Cell(token){ //refatorar pra ficar menor
+    return token
+}
+
+let mainGameBoard = createGameBoard()
+console.log(mainGameBoard)
+function updateGameBoard (row, col, token) {
+    return mainGameBoard[row][col] = token
+}
+
+updateGameBoard(0, 1, 'X')
+updateGameBoard(1, 1, 'O')
+console.log(displayBoard(mainGameBoard))
+
+function displayBoard (board){
+   return board.map((row) => row.join("   | ")).join("\n-------------\n")
+}
+
 
 /////////////////////////////////// T A S K S ////////////////////////////////////////
 //board: criar array 3x3 *******ok******
 //arrumar um jeito de passar o board criado pela creategameboard para dentro da wincondition (insight na linha de wincondition) *******ok******
 //imprimir o quadro no console *******ok******
 //criar lógica de win do jogo  *******ok******
-//organizar melhor linhas 15 a 22 que guardam informações de jogadores
+//organizar melhor linhas 15 a 22 que guardam informações de jogadores *******ok******
 //criar lógica de inserção de valor e impressão no console
 
 // 0 1 2
@@ -55,5 +70,4 @@ function winCondition (){ //precisa receber o board já populado
         
 }
 
-console.log(winCondition())
 

@@ -16,39 +16,7 @@ const players = {
     nomeP2: player2
 }
 
-let mainGameBoard = createGameBoard()
-
-function createGameBoard(){
-    const gameBoard = []
-
-    for (let i = 0; i < 3; i++){
-        const row = []
-        for (let j = 0; j < 3; j++){
-            row.push(null)
-        }
-        gameBoard.push(row)
-    }
-    return gameBoard
-}
-
-function Cell(token){ //necessario?
-    return token
-}
-
-function updateGameBoard (row, col, token) {
-    mainGameBoard[row][col] = token
-}
-
-function displayBoard (board){
-    return console.log(board.map((row) => row.join("   | ")).join("\n-------------\n"))
- }
-// 0 1 2
-// 3 4 5
-// 6 7 8
-
-//winCondition precisa ser disparada para cada inserção de valor, para verificar se uma vitória foi atingida
-
-function winCondition (gameBoard){ //precisa receber o board já populado
+function winCondition (gameBoard){ //vai rebceer o array, ja em flat
     const board = gameBoard
     const winPattern = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8], //horizontais
@@ -56,16 +24,61 @@ function winCondition (gameBoard){ //precisa receber o board já populado
         [0, 4, 8], [2, 4, 6] //diagonais
     ]
     //então, pedir para um if verificar que, se o array retornar true, encerrar o jogo e declarar um vencedor
-    if (winPattern.some(pattern => pattern.every(index => board[index] === "X"))) return "X venceu!"; //some checa se há algum dos padrões preenchidos, se sim, checa se há apenas X
-    if (winPattern.some(pattern => pattern.every(index => board[index] === "O"))) return "O venceu!"; 
-    
+    if (winPattern.some(pattern => pattern.every(index => board[index] == "X"))){
+        playAgain ()
+        showWinner("X")
+        return "X venceu!"; 
+    }//some checa se há algum dos padrões preenchidos, se sim, checa se há apenas X
+    if (winPattern.some(pattern => pattern.every(index => board[index] == "O"))){
+        playAgain ()
+        showWinner("O")
+        //função que imprime o vencedor na DOM
+        return "O venceu!";
+    }
     return "Nenhum vencedor ainda!"
 }
 
-function playGame (player, row, col, token){
-    updateGameBoard (row, col, token)
-    displayBoard(mainGameBoard)
-    console.log(winCondition(mainGameBoard))
+//DOM manipulation
+const container = document.querySelector(".container-div")
+const btn = document.querySelectorAll(".cell")
+let lastToken = "X"
+
+function showWinner (winnerParam){
+    const winner = document.createElement("div")
+    winner.classList.add("winner-div")
+    winner.textContent = `o jogador ${winnerParam} venceu!`
+    container.appendChild(winner)
+}
+function playAgain (){
+    const againBtn = document.createElement("button")
+    againBtn.classList.add("againBtn")
+    container.appendChild(againBtn)
+
+    againBtn.addEventListener("click", () => {
+        btn.forEach(div => div.innerText = "") //isso funciona assim?
+    })
 }
 
-playGame('teste', 1,0,'X')
+//definir jogador X e jogador O
+//perguntar quem vai jogar com x e quem vai jogar com o
+//a cada clique, alternar entre X e O ***ok*** -- feito com uma variável que muda inline style html usando operador ternário
+//ao clique, preencher a coluna ***ok*** -- feito com addeventlistener individualmente em uma nodelist retornada por queryselectorAll
+//mudar as cores para X e O ***ok***
+//amarrar as cores e o grid aos boards da lógica
+
+
+
+//******permite inserção de tokens e checa a cada jogada se há um vencedor
+btn.forEach((btn) => {
+    btn.addEventListener('click', () => {
+    if (btn.textContent === "X" || btn.textContent === "O") return; // Impede reescrever o token
+    if (lastToken === "X") btn.style.color = 'red'
+    btn.textContent = lastToken === "X" ? "O" : "X" //define textcontent de btn com um desses
+    lastToken = btn.textContent
+    const currentNodeList = document.querySelectorAll(".cell")
+    const tokens = [...currentNodeList].map(el => el.innerText) 
+    const resultado = winCondition(tokens);
+    console.log(resultado); 
+})
+})
+  

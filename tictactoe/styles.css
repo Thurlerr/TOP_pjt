@@ -1,7 +1,62 @@
-const winPattern = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8], //horizontais
-    [0, 3, 6], [1, 4, 7], [2, 5, 8], //verticais
-    [0, 4, 8], [2, 4, 6] //diagonais
-    ]
+* {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-weight:bolder;
+    font
+}
 
-    
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: aqua;
+}
+
+.container-div {
+    background-color: rgb(55, 0, 255);
+    width: 350px; /* Defina um tamanho fixo para o tabuleiro */
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas iguais */
+    grid-template-rows: repeat(3, 1fr); /* 3 linhas iguais */
+    width: 100%;
+    height: 100%;
+    gap: 2px; /* Pequeno espaço entre os quadrados */
+}
+
+.cell {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border: 2px solid black;
+    width: 100%;
+    height: 100%;
+
+    font-size: 36px;
+    color: rgb(214, 117, 193);
+
+}
+
+
+/* Botão invisível */
+.cell-btn {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Invisível, mas ainda clicável */
+    cursor: pointer;
+}
+
+/* estilos de elementos criados pela DOM */
+
+.winner-div {
+    background-color: brown;
+} 

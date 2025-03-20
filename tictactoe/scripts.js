@@ -5,18 +5,9 @@
 //criar lógica de win do jogo  *******ok******
 //organizar melhor linhas 15 a 22 que guardam informações de jogadores *******ok******
 //criar lógica de inserção de valor e impressão no console
-//RESOLVER PROBLEMA DE ATUALIZAÇÃO DA BOARD 
+//RESOLVER PROBLEMA DE ATUALIZAÇÃO DA BOARD
 
-let player1 = ""
-let player2 = ""
-
-player1 = "paulim"
-const players = {
-    nomeP1: player1,
-    nomeP2: player2
-}
-
-function winCondition (gameBoard){ //vai rebceer o array, ja em flat
+function winCondition (gameBoard){ //vai rebceer o array, ja em "flat"
     const board = gameBoard
     const winPattern = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8], //horizontais

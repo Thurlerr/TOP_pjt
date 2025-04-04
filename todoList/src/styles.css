@@ -13,7 +13,7 @@
 
     width: 25vw;
     height: 100vh;
-    background-color: aqua;
+    background-color: rgb(182, 212, 218);
 }
 
 #tempDiv {
@@ -43,11 +43,23 @@
 }
 
 h2 {
+    display: flex;
     width: 100%;
-    background-color: aqua;
+    background-color: rgb(182, 212, 218);
     align-self: flex-start; 
-    /* margin-left: auto;
-    margin-right: auto; */
-    
+    justify-content: center;
 
+}
+
+/*estilos dos cards */
+
+.pDivTask {
+    display: flex;
+    justify-content: space-between;
+    height: 6%;
+    margin: 5px;
+}
+
+#doneButton {
+    margin-right: 5px;
 }

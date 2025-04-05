@@ -1,5 +1,13 @@
 import { createPendingTask } from "./mainContent"
 
+
+
+import { storeTaskData } from "./storage.js"
+import { storeTask } from "./storage.js"
+import { populateStorage } from "./storage.js"
+import { retrieveStorage } from "./storage.js"
+import { populateDomFromStorage } from "./storage.js"
+
 const addTaskDiv = document.querySelector("#taskDiv")
 //botões
 const addTaskButton = document.querySelector("#addTask")
@@ -32,6 +40,9 @@ export function createAddTaskInput (){
             addTask();
             //debug 
             console.log("input criado")
+            storeTaskData()
+            populateStorage()
+
         }
 })
 }

@@ -11,5 +11,5 @@ import { populateDomFromStorage } from "./storage.js"
 
 console.log("Webpack configurado com sucesso!")
 
-
+window.storeTaskData = storeTaskData
 populateDomFromStorage()

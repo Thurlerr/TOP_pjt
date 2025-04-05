@@ -39,10 +39,6 @@ export function createAddTaskInput (){
 
             addTask();
             //debug 
-            console.log("input criado")
-            storeTaskData()
-            populateStorage()
-
         }
 })
 }
@@ -55,7 +51,8 @@ export function addTask () {
     const input = document.querySelector("#tempInput").value
     funcaoDeFora = input;
     createPendingTask()
-    console.log(input)
+    storeTaskData()
+    populateStorage()
 })
 }
 createAddTaskInput();

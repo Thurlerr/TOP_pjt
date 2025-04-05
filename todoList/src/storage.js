@@ -1,8 +1,11 @@
+import { markTaskAsDone } from "./mainContent.js"
+
 let storagedTasks = {
     pendingTasks: [],
     completedTasks: []
 }
 
+//prepara dados pra ser usado pela storeTask
 export function storeTaskData(){
 
     storagedTasks = {
@@ -17,21 +20,21 @@ storeTask(pendingTask)
 storeTask(doneTask)
 
 const data = JSON.stringify(storagedTasks) //esse cara vai vir pro webstorage
+window.storagedTasks = storagedTasks
 }
 
 export function storeTask(nodeList){
     nodeList.forEach((div) =>{
-        if (div.classList == "dTask") {
+        console.log(`debug storeTask cod 1 ${div.classList}`)
+        if (div.classList == "dTask") { //testar o valor de div.classList
             storagedTasks.completedTasks.push(div.firstChild.textContent) 
         } else {
-            // storagedTasks.pendingTasks.push(div.firstChild.textContent) 
-            storagedTasks.pendingTasks.push(div.querySelector("span").textContent) 
-            console.log(`debug storeTask div.FirstChild = ${div.firstChild}`)
+            storagedTasks.pendingTasks.push(div.firstChild.textContent) 
         }
     })
-
 }
 
+//efetivamente usando webstorage
 export function populateStorage() {
     Object.keys(storagedTasks).forEach(key => {
       let value = storagedTasks[key];
@@ -71,6 +74,7 @@ export function populateDomFromStorage(){
             tempDiv.append(tempSpan,doneButton)
             pendingTask.insertAdjacentElement("beforeend", tempDiv)
     })
+    markTaskAsDone();
 
 }
 

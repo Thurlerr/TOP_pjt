@@ -1,4 +1,5 @@
 import { funcaoDeFora } from "./sidebarEvents"
+import { storeTaskData } from "./storage.js"
 
 const mainContent = document.querySelector("#mainContent")
 const pendingTask = document.querySelector("#pendingTask")
@@ -27,7 +28,7 @@ export function createPendingTask(){
 //utilizando forEach. o forEach itera sobre cada elemento da nodelist capturada pra adicionar um evento onde
 //pega o pai do elemento clicado (vai pegar a pTaskDiv, criada dinamicamente por outra função), e em seguida extrai
 //o texto dela para gerar a tarefa concluída no cartão. No final, remove essa tarefa da lista de pendente.
-function markTaskAsDone(){
+export function markTaskAsDone(){
 
     const doneButton = document.querySelectorAll("#doneButton")
     const cTask = document.querySelector("#completedTask")
@@ -49,7 +50,7 @@ function markTaskAsDone(){
         cTask.appendChild(tempSpan)
 
         taskDiv.remove();
-    
+        storeTaskData()
         })
     })
 }

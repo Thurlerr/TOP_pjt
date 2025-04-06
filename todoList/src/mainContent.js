@@ -1,20 +1,21 @@
 import { funcaoDeFora } from "./sidebarEvents"
 import { storeTaskData } from "./storage.js"
+import { populateStorage } from "./storage.js"
+
 
 const mainContent = document.querySelector("#mainContent")
 const pendingTask = document.querySelector("#pendingTask")
 
 //a partir do valor da funcaoDeFora, cria uma tarefa no card Pendente, essa função é chamada
 //no evento dentro da função addTask do módulo sidebarEvents responsável pelo clique no botão de Adicionar Tarefa
-export function createPendingTask(){
+export function createPendingTask(spanValue){
 
     const tempDiv = document.createElement("div")
     tempDiv.classList = "pDivTask"
     
     const tempSpan = document.createElement("span")
     tempSpan.classList = "pTask"
-    tempSpan.textContent = funcaoDeFora
-    
+    tempSpan.textContent = spanValue
     
     const doneButton = document.createElement("button")
     doneButton.id = "doneButton"
@@ -47,10 +48,27 @@ export function markTaskAsDone(){
         tempSpan.classList = "dTask"
         tempSpan.textContent = taskText
         
-        cTask.appendChild(tempSpan)
+        tempDiv.appendChild(tempSpan)
+        cTask.appendChild(tempDiv)
 
         taskDiv.remove();
         storeTaskData()
+        populateStorage()
+        })
+    })
+}
+
+export function activateRemoveButtons() {
+const removeButtons = document.querySelectorAll(".taskBtn")
+
+    removeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+        const tempDiv = btn.parentElement
+        const tempSpanText = tempDiv.querySelector(".dTask").textContent
+        tempDiv.remove()
+        createPendingTask(tempSpanText)
+        storeTaskData()
+        populateStorage()
         })
     })
 }

@@ -38,7 +38,6 @@ export function createAddTaskInput (){
             addTaskDiv.insertAdjacentElement("afterend", div)
 
             addTask();
-            //debug 
         }
 })
 }
@@ -50,7 +49,7 @@ export function addTask () {
     tempButton.addEventListener("click", () => {
     const input = document.querySelector("#tempInput").value
     funcaoDeFora = input;
-    createPendingTask()
+    createPendingTask(input)
     storeTaskData()
     populateStorage()
 })

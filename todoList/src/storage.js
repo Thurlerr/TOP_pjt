@@ -1,11 +1,11 @@
 import { markTaskAsDone } from "./mainContent.js"
+import { activateRemoveButtons } from "./mainContent.js"
+
 
 let storagedTasks = {
     pendingTasks: [],
     completedTasks: []
 }
-
-//prepara dados pra ser usado pela storeTask
 export function storeTaskData(){
 
     storagedTasks = {
@@ -19,14 +19,12 @@ const doneTask = document.querySelectorAll(".dTask")
 storeTask(pendingTask)
 storeTask(doneTask)
 
-const data = JSON.stringify(storagedTasks) //esse cara vai vir pro webstorage
-window.storagedTasks = storagedTasks
+window.storagedTasks = storagedTasks //para fins de debug
 }
 
 export function storeTask(nodeList){
     nodeList.forEach((div) =>{
-        console.log(`debug storeTask cod 1 ${div.classList}`)
-        if (div.classList == "dTask") { //testar o valor de div.classList
+        if (div.classList == "dTask") { 
             storagedTasks.completedTasks.push(div.firstChild.textContent) 
         } else {
             storagedTasks.pendingTasks.push(div.firstChild.textContent) 
@@ -48,38 +46,64 @@ export function populateStorage() {
       localStorage.setItem(key, value);
     });
   }
+// export function retrieveStorage(){ //essa funçao pega o item do storage e ja retorna o objeto convertido 
+//     const storagedObj = localStorage.getItem("storagedTasks");
+//     let parsedObj
 
-export function retrieveStorage(){
-    const resetObj = JSON.parse(localStorage.getItem('pendingTasks')); //tem qmuda
-    return resetObj
-}
+//     if (storagedObj) {
+//         parsedObj = JSON.parse(storagedObj);
+//     } else {
+//         console.warn("Nada salvo ainda em 'storagedTasks'");
+//     }
+//     return parsedObj
+// }
+//colocar o getitem dentro da populatedom
+export function populateDomFromStorage() {
+    const pendingTask = document.querySelector("#pendingTask");
+    const completedTask = document.querySelector("#completedTask");
 
-export function populateDomFromStorage(){
-    let resetObj = retrieveStorage()
-    const pendingTask = document.querySelector("#pendingTask")
+    // Pega os arrays do localStorage
+    const pendingArray = JSON.parse(localStorage.getItem("pendingTasks"));
+    const completedArray = JSON.parse(localStorage.getItem("completedTasks"));
 
-    resetObj.forEach((inArr) => {
+    // Se tiver tasks pendentes, joga na DOM
+    if (pendingArray) {
+        pendingArray.forEach(taskText => {
+            const tempDiv = document.createElement("div");
+            tempDiv.classList = "pDivTask";
 
-        const tempDiv = document.createElement("div")
-            tempDiv.classList = "pDivTask"
-            
-            const tempSpan = document.createElement("span")
-            tempSpan.classList = "pTask"
-            tempSpan.textContent = inArr //adaptar
-            
-            
-            const doneButton = document.createElement("button")
-            doneButton.id = "doneButton"
-            
-            tempDiv.append(tempSpan,doneButton)
-            pendingTask.insertAdjacentElement("beforeend", tempDiv)
-    })
+            const tempSpan = document.createElement("span");
+            tempSpan.classList = "pTask";
+            tempSpan.textContent = taskText;
+
+            const doneButton = document.createElement("button");
+            doneButton.id = "doneButton";
+
+            tempDiv.append(tempSpan, doneButton);
+            pendingTask.appendChild(tempDiv);
+        });
+    }
+
+    // Se tiver tasks concluídas, joga na DOM também
+    if (completedArray) {
+        completedArray.forEach(taskText => {
+            const tempDiv = document.createElement("div");
+            tempDiv.classList = "dDivTask";
+
+            const tempSpan = document.createElement("span");
+            tempSpan.classList = "dTask";
+            tempSpan.textContent = taskText;
+
+            const removeButton = document.createElement("button");
+            // removeButton.id = "removeButton";
+            removeButton.classList = "taskBtn"
+
+            tempDiv.append(tempSpan, removeButton);
+            completedTask.appendChild(tempDiv);
+        });
+    }//itera sobre todos os valores de pending e completed task
     markTaskAsDone();
-
+    activateRemoveButtons();
 }
+    
 
-
-//popular os arrays com algum metodo que itera sobre essas strings e substitui pelo conteudo de cada span
-
-//pra joga a data de volta pra DOM pra eu visualizar na tela quando o usuario abrir o site, é direto pelo webstorage
-//ou eu faço isso com os eventos de manipulação da DOM, usando como parametro a variavel data?

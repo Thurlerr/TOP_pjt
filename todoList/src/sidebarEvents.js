@@ -1,4 +1,5 @@
 import { createPendingTask } from "./mainContent"
+import { deleteTask } from "./mainContent"
 import { storeTaskData } from "./storage.js"
 import { populateStorage } from "./storage.js"
 
@@ -25,7 +26,8 @@ export function createAddTaskInput (){
             const tempButton = document.createElement("button")
             tempButton.type = "button"
             tempButton.id = "tempButton"
-        
+            
+
             div.append(tempLabel, tempInput, tempButton)
             addTaskDiv.insertAdjacentElement("afterend", div)
 
@@ -34,12 +36,13 @@ export function createAddTaskInput (){
     })
 }
 
-//adiciona listener nos botões 
+//adiciona um evento no botão de addtask  da sidebar pra pegar o valor do input e invocar função de criar tarefa
 export function addTask () {
-        
+
     tempButton.addEventListener("click", () => {
     const input = document.querySelector("#tempInput").value
     createPendingTask(input)
+    
     // storeTaskData()
     // populateStorage()
 })

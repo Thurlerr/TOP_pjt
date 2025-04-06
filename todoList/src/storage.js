@@ -18,7 +18,6 @@ const doneTask = document.querySelectorAll(".dTask")
 storeTask(pendingTask)
 storeTask(doneTask)
 
-window.storagedTasks = storagedTasks //para fins de debug
 }
 
 export function storeTask(nodeList){

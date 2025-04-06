@@ -60,6 +60,19 @@ h2 {
     margin: 5px;
 }
 
+.dDivTask {
+    display: flex;
+    justify-content: space-between;
+    height: 6%;
+    margin: 5px;
+}
+
 #doneButton {
     margin-right: 5px;
+}
+
+/* botões dos cards */
+
+.deleteBtn {
+    background-color: brown;
 }

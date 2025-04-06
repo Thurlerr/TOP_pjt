@@ -1,25 +1,17 @@
 import { createPendingTask } from "./mainContent"
-
-
-
 import { storeTaskData } from "./storage.js"
-import { storeTask } from "./storage.js"
 import { populateStorage } from "./storage.js"
-import { retrieveStorage } from "./storage.js"
-import { populateDomFromStorage } from "./storage.js"
 
 const addTaskDiv = document.querySelector("#taskDiv")
-//botões
 const addTaskButton = document.querySelector("#addTask")
 
+//botão de add tarefa, da sidebar, que cria um input dinamico
 export function createAddTaskInput (){
     addTaskButton.addEventListener("click", () => {
-    const existingDiv = document.querySelector("#tempDiv")
-
+    
+    const existingDiv = document.querySelector("#tempDiv") //logica pra evitar duplicidade
         if (existingDiv) {
-            // Se a div já existe, remove
             existingDiv.remove();
-            console.log("input removido");
         }else{
             const div = document.createElement("div")
             div.id = "tempDiv"
@@ -39,19 +31,17 @@ export function createAddTaskInput (){
 
             addTask();
         }
-})
+    })
 }
-export let funcaoDeFora; //vai segurar o valor do input pra eu usar em outra funçao e criar a task
 
+//adiciona listener nos botões 
 export function addTask () {
-    const tempButton = document.querySelector("#tempButton")
-    
+        
     tempButton.addEventListener("click", () => {
     const input = document.querySelector("#tempInput").value
-    funcaoDeFora = input;
     createPendingTask(input)
-    storeTaskData()
-    populateStorage()
+    // storeTaskData()
+    // populateStorage()
 })
 }
 createAddTaskInput();

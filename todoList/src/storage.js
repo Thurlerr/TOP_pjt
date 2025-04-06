@@ -1,7 +1,6 @@
 import { markTaskAsDone } from "./mainContent.js"
 import { activateRemoveButtons } from "./mainContent.js"
 
-
 let storagedTasks = {
     pendingTasks: [],
     completedTasks: []
@@ -46,18 +45,7 @@ export function populateStorage() {
       localStorage.setItem(key, value);
     });
   }
-// export function retrieveStorage(){ //essa funçao pega o item do storage e ja retorna o objeto convertido 
-//     const storagedObj = localStorage.getItem("storagedTasks");
-//     let parsedObj
 
-//     if (storagedObj) {
-//         parsedObj = JSON.parse(storagedObj);
-//     } else {
-//         console.warn("Nada salvo ainda em 'storagedTasks'");
-//     }
-//     return parsedObj
-// }
-//colocar o getitem dentro da populatedom
 export function populateDomFromStorage() {
     const pendingTask = document.querySelector("#pendingTask");
     const completedTask = document.querySelector("#completedTask");
@@ -101,7 +89,7 @@ export function populateDomFromStorage() {
             tempDiv.append(tempSpan, removeButton);
             completedTask.appendChild(tempDiv);
         });
-    }//itera sobre todos os valores de pending e completed task
+    }
     markTaskAsDone();
     activateRemoveButtons();
 }

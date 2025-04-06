@@ -1,13 +1,8 @@
-import { funcaoDeFora } from "./sidebarEvents"
 import { storeTaskData } from "./storage.js"
 import { populateStorage } from "./storage.js"
 
-
-const mainContent = document.querySelector("#mainContent")
 const pendingTask = document.querySelector("#pendingTask")
 
-//a partir do valor da funcaoDeFora, cria uma tarefa no card Pendente, essa função é chamada
-//no evento dentro da função addTask do módulo sidebarEvents responsável pelo clique no botão de Adicionar Tarefa
 export function createPendingTask(spanValue){
 
     const tempDiv = document.createElement("div")
@@ -35,11 +30,9 @@ export function markTaskAsDone(){
     const cTask = document.querySelector("#completedTask")
     
     doneButton.forEach((button) => {
-        
         button.addEventListener("click", (event) => {
             const taskDiv = event.target.parentElement; 
             const taskText = taskDiv.querySelector(".pTask").textContent
-
 
             const tempDiv = document.createElement("div")
             tempDiv.classList = "dDivTask"

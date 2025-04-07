@@ -14,13 +14,19 @@ export function createPendingTask(spanValue){
     
     const doneButton = document.createElement("button")
     doneButton.id = "doneButton"
-    
-    deleteTask(tempDiv)
 
 
     tempDiv.append(tempSpan,doneButton)
     pendingTask.insertAdjacentElement("beforeend", tempDiv)
+    // addDeleteButton(tempDiv)
+
+    const editableSpan = pendingTask.lastChild.querySelector("span")
+    editTaskSpan(editableSpan)
+    addDeleteButton(tempDiv)
+
     markTaskAsDone()
+    storeTaskData() 
+    populateStorage()
 }
 
 //move tarefa do pendente para concluída, selecionando todos os doneButtons e adicionando eventos a cada um
@@ -49,21 +55,23 @@ export function markTaskAsDone(){
         const removeButton = document.createElement("button");
         removeButton.classList = "taskBtn"
 
-        
-
         tempDiv.append(tempSpan, removeButton)
         cTask.appendChild(tempDiv)
-        removeButton.addEventListener("click", () => {
-        const tempDiv = removeButton.parentElement
-        const tempSpanText = tempDiv.querySelector(".dTask").textContent //////////
-        tempDiv.remove()
-        createPendingTask(tempDiv) //verificar porque ao inves de deletar, ta faltando pra pendente
 
-        storeTaskData() //está aqui porque toda ação de interação to usuário deve ativar o storage
-        populateStorage()
-        })
+        const editableSpan = completedTask.lastChild.querySelector("span")
+        editTaskSpan(editableSpan)
+        addDeleteButton(tempDiv)
+
+            removeButton.addEventListener("click", () => {
+            const tempDiv = removeButton.parentElement
+            const tempSpanText = tempDiv.querySelector(".dTask").textContent //////////
+            tempDiv.remove()
+            createPendingTask(tempSpanText) 
+            // storeTaskData() //está aqui porque toda ação de interação to usuário deve ativar o storage
+            // populateStorage()
+            })
         
-        deleteTask(tempDiv)
+        
     
         taskDiv.remove();
         storeTaskData()
@@ -88,15 +96,49 @@ const removeButtons = document.querySelectorAll(".taskBtn")
     })
 }
 
-//cria botão de remover já funcional
-export function deleteTask(div){
+export function addDeleteButton(div){
     const deleteTaskBtn = document.createElement("button")
     deleteTaskBtn.classList = "deleteBtn"
+
     deleteTaskBtn.addEventListener("click", () => {
         console.log("deleteTask foi chamada", div)
-        div.remove() //posso tentartbm substituir por  deledeleteTaskBtnteTask.parentElement
-        
+        div.remove()
+    storeTaskData() ////se algo quebrar, tenta colocar essse cara dnovo
+    populateStorage() 
     })
 
     div.appendChild(deleteTaskBtn)
+}
+
+export function editTaskSpan(span){
+    span.addEventListener("dblclick", () => {
+        const tempDiv = span.parentElement
+        const tempInput = document.createElement("input")
+        tempInput.value = span.textContent
+
+        span.remove()
+        tempDiv.insertBefore(tempInput, tempDiv.firstChild)
+
+        tempInput.addEventListener("keydown", (e) => {
+            if (e.code === "Enter") {  
+                const tempSpanReplace = document.createElement("span")
+
+                if (tempDiv.parentElement.id == "pendingTask"){
+                    tempSpanReplace.classList = "pTask"
+                }else{
+                    tempSpanReplace.classList = "dTask"
+                }
+
+                tempSpanReplace.textContent = tempInput.value
+                
+                tempInput.remove()
+                tempDiv.insertBefore(tempSpanReplace, tempDiv.firstChild)
+                storeTaskData()
+                populateStorage()
+                editTaskSpan(tempDiv.querySelector("span"))
+            }
+        })
+
+    });
+
 }

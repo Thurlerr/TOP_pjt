@@ -1,5 +1,5 @@
 import { createPendingTask } from "./mainContent"
-import { deleteTask } from "./mainContent"
+import { addDeleteButton } from "./mainContent"
 import { storeTaskData } from "./storage.js"
 import { populateStorage } from "./storage.js"
 
@@ -7,13 +7,9 @@ const addTaskDiv = document.querySelector("#taskDiv")
 const addTaskButton = document.querySelector("#addTask")
 
 //botão de add tarefa, da sidebar, que cria um input dinamico
-export function createAddTaskInput (){
+export function createSidebarInput(){ 
     addTaskButton.addEventListener("click", () => {
-    
-    const existingDiv = document.querySelector("#tempDiv") //logica pra evitar duplicidade
-        if (existingDiv) {
-            existingDiv.remove();
-        }else{
+
             const div = document.createElement("div")
             div.id = "tempDiv"
         
@@ -28,23 +24,21 @@ export function createAddTaskInput (){
             tempButton.id = "tempButton"
             
 
+            
             div.append(tempLabel, tempInput, tempButton)
             addTaskDiv.insertAdjacentElement("afterend", div)
-
-            addTask();
-        }
+            addTaskFromSidebar(tempButton);
     })
 }
-
 //adiciona um evento no botão de addtask  da sidebar pra pegar o valor do input e invocar função de criar tarefa
-export function addTask () {
+export function addTaskFromSidebar(tempButton) {
 
     tempButton.addEventListener("click", () => {
     const input = document.querySelector("#tempInput").value
     createPendingTask(input)
     
-    // storeTaskData()
-    // populateStorage()
+     storeTaskData()
+    populateStorage()
 })
 }
-createAddTaskInput();
+createSidebarInput();

@@ -1,5 +1,8 @@
 import { markTaskAsDone } from "./mainContent.js"
 import { activateRemoveButtons } from "./mainContent.js"
+import { addDeleteButton } from "./mainContent.js"
+import { editTaskSpan } from "./mainContent.js"
+
 
 let storagedTasks = {
     pendingTasks: [],
@@ -68,6 +71,11 @@ export function populateDomFromStorage() {
 
             tempDiv.append(tempSpan, doneButton);
             pendingTask.appendChild(tempDiv);
+
+
+            const editableSpan = pendingTask.lastChild.querySelector("span")
+            editTaskSpan(editableSpan)
+            addDeleteButton(tempDiv)
         });
     }
 
@@ -87,6 +95,10 @@ export function populateDomFromStorage() {
 
             tempDiv.append(tempSpan, removeButton);
             completedTask.appendChild(tempDiv);
+
+            const editableSpan = completedTask.lastChild.querySelector("span")
+            editTaskSpan(editableSpan)
+            addDeleteButton(tempDiv)
         });
     }
     markTaskAsDone();

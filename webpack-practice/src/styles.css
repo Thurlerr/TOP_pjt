@@ -12,9 +12,15 @@
 } */
 
 /* Garante que qualquer imagem dentro do #content fique ajustada */
-#content img {
-    display: block;
-    margin: 0 auto; /* Centraliza horizontalmente */
-    max-width: 90%;
-    max-height: 90vh;
-}
+    #banner {
+
+        background-image: url(../img/uma-fatia-de-pizza-crocante-com-carne-e-queijo_140725-6974.avif);
+        background-size: cover;  /* Faz a imagem cobrir toda a área do banner */
+        background-position: center top; /* Mantém no topo, mas centraliza a imagem verticalmente */
+        
+        background-repeat: no-repeat; /* Evita repetição */
+        position: absolute; /* Mantém no topo da página */
+        top: 0; /* Garante que fique colado no topo */
+        left: 0; /* Alinha à esquerda */
+    }
+

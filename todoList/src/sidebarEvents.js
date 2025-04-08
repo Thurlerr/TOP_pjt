@@ -47,6 +47,7 @@ export function addTaskFromSidebar(tempButton) {
 createSidebarInput();
 
 //vai receber um input com valores de data e mes da funçao de criar projeto
+//git statu
 export function createSetDateBtn (divToAppend){
 
     const scheduleBtn = document.createElement("button")

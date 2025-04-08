@@ -27,6 +27,12 @@
     margin-left: -20px;
     height: 15px;
 }
+
+/*botões da barra lateral*/
+.confirmScheduleBtn {
+    background-color: aquamarine;
+}
+
 /* estilos do conteudo principal */
 
 #mainContent {

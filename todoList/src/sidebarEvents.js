@@ -46,8 +46,47 @@ export function addTaskFromSidebar(tempButton) {
 }
 createSidebarInput();
 
-//adiciona possibilidade de especificar data para cumprimento da tarefa
-export function setDate (){
-    const today = new Date ()
-    const specificDate = new Date () //pegar input de DOM via .value
+//vai receber um input com valores de data e mes da funçao de criar projeto
+export function createSetDateBtn (divToAppend){
+
+    const scheduleBtn = document.createElement("button")
+    scheduleBtn.classList = "scheduleBtn"
+    const div = divToAppend //ou tentar algo com document.queryselector, se o seletor não pegar
+
+    
+    scheduleBtn.addEventListener("click", () =>{
+        
+        const dayScheduleLabel = document.createElement("label")
+        dayScheduleLabel.htmlFor = "dayScheduleInput"
+        dayScheduleLabel.textContent = "Dia:"
+        
+        const dayScheduleInput  = document.createElement("input")
+        dayScheduleInput.id = "dayScheduleInput"
+        
+        const monthScheduleLabel = document.createElement("label")
+        monthScheduleLabel.htmlFor = "monthScheduleLabel"
+        monthScheduleLabel.textContent = "Mês:"
+        
+        const monthScheduleInput  = document.createElement("input")
+        monthScheduleInput.id = "monthScheduleInput"
+        
+        const confirmScheduleBtn = document.createElement("button")
+        scheduleBtn.classList = "confirmScheduleBtn"
+        
+        
+        confirmScheduleBtn.addEventListener("click", () =>{
+            const dayScheduleInputValue = document.querySelector("dayScheduleInput").value
+            const monthScheduleLabelValue = document.querySelector("monthScheduleInput").value
+            
+            const scheduleDate = new Date (2024,monthScheduleLabelValue,dayScheduleInputValue) 
+            if (dayScheduleInputValue.value === "" && monthScheduleLabelValue === ""){
+                 scheduleDate = new Date ()
+            }
+            
+            return scheduleDate
+        })
+        div.append(dayScheduleLabel,dayScheduleInput,monthScheduleLabel,monthScheduleInput,confirmScheduleBtn)
+    })
+    
+    div.appendChild(scheduleBtn)
 }

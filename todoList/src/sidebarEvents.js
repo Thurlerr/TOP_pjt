@@ -39,6 +39,15 @@ export function addTaskFromSidebar(tempButton) {
     
      storeTaskData()
     populateStorage()
+
+    //alg : por default, seta a tarefa pra hoje
+    //alg : há um botão responsável por abrir um input e especificar data para fazer a tarefa
 })
 }
 createSidebarInput();
+
+//adiciona possibilidade de especificar data para cumprimento da tarefa
+export function setDate (){
+    const today = new Date ()
+    const specificDate = new Date () //pegar input de DOM via .value
+}

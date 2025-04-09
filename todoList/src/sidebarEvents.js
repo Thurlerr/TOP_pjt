@@ -47,7 +47,8 @@ export function addTaskFromSidebar(tempButton) {
 createSidebarInput();
 
 
-export function createSetDateBtn (divToAppend){
+export function createSetDateBtn (divToAppend, callBackVarBridge){
+    //callBackVarBridge é a própria função que chama createSetDateBtn, pra ter acesso ao valor da data dps
 
     const scheduleBtn = document.createElement("button")
     scheduleBtn.classList = "scheduleBtn"
@@ -75,17 +76,16 @@ export function createSetDateBtn (divToAppend){
         confirmScheduleBtn.classList = "confirmScheduleBtn genericConfirmBtn"
         
         
-        
         confirmScheduleBtn.addEventListener("click", () =>{
-            const dayScheduleInputValue = document.querySelector("dayScheduleInput").value
-            const monthScheduleLabelValue = document.querySelector("monthScheduleInput").value
+            const dayScheduleInputValue = document.querySelector("#dayScheduleInput").value
+            const monthScheduleLabelValue = document.querySelector("#monthScheduleInput").value
             
-            const scheduleDate = new Date (2024,monthScheduleLabelValue,dayScheduleInputValue) 
+            let scheduleDate = new Date (2024,monthScheduleLabelValue,dayScheduleInputValue) 
             if (dayScheduleInputValue.value === "" && monthScheduleLabelValue === ""){
                  scheduleDate = new Date ()
             }
             
-            return scheduleDate
+            callBackVarBridge(scheduleDate) //aqui a função que chamou essa função, recebe cópia do valor da data
         })
         divToAppend.append(dayScheduleLabel,dayScheduleInput,monthScheduleLabel,monthScheduleInput,confirmScheduleBtn)
     })
@@ -93,12 +93,19 @@ export function createSetDateBtn (divToAppend){
     divToAppend.appendChild(scheduleBtn)
 }
 
+let projects = {
+	// taskTitle: {  //(retorno de #confirmProjectBtn)
+	// 	taskText: "", //(retorno de #addToProjectBtn),
+  	// 	taskDate: "" //(retorno de .confirmScheduleBtn)
+	// },
+}
+
+const newProjectBtn = document.querySelector("#newProjectBtn")
+    newProjectBtn.addEventListener("click", () => createProject ())
 function createProject (){
+    projects = {} //reseta o obj toda vez que a função é chamada
 
-    const ProjectBtn = document.querySelector("#newProjectBtn")
-
-    ProjectBtn.addEventListener("click", () =>{
-        
+    
         const newProjectFirstBox = document.createElement("div")
         newProjectFirstBox.classList = "genericDiv"
 
@@ -123,8 +130,7 @@ function createProject (){
                 const projectName = document.querySelector("#newProjectInput").value
 
                 const div = document.createElement("div")
-                div.id = "ProjectDiv" //jogar nessa
-                
+                div.id = "ProjectDiv" 
                 
                 const p = document.createElement("p")
                 p.classList = "title"
@@ -140,9 +146,16 @@ function createProject (){
                 setProjectBtn.id = "setProjectBtn"
                 setProjectBtn.classList = "genericConfirmBtn"
                 
-                
+                projects[projectName] = {}
+                let selectedDate = null
+
+                createSetDateBtn(div, (date) => {
+                selectedDate = date
+                projects[projectName]["taskDate"] = selectedDate
+                console.log("Data atribuída ao projeto:", selectedDate)
+                })
+
                 div.append(p, newProjectInput, addToProjectBtn, setProjectBtn)
-                createSetDateBtn(div)
                 ganchoRenomear.appendChild(div)
 
 
@@ -154,17 +167,13 @@ function createProject (){
 
                         const span = document.createElement("span")
                         span.textContent = ProjectTask
-
+                        if (!projects[projectName]["taskText"]) projects[projectName]["taskText"] =[]
+                        
+                        projects[projectName]["taskText"].push(ProjectTask)
+                        console.log(projects)
                         div1.append(span)
                         div.appendChild(div1)
                     })
-
             })
-            
-        })
-
-
-
 }
 
-createProject ()

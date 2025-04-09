@@ -138,7 +138,5 @@ export function editTaskSpan(span){
                 editTaskSpan(tempDiv.querySelector("span"))
             }
         })
-
     });
-
 }

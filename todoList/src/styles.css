@@ -5,7 +5,20 @@
 .page {
     display: flex;
 }
-/* configurações da barra lateral */
+
+.genericDiv {
+    display: flex
+}
+
+.genericConfirmBtn::after {
+    content: "✓ "; 
+  color: green; 
+  font-weight: bold;
+}
+
+
+
+/* barra lateral */
 #sidebar {
     display: flex;
     flex-direction: column;
@@ -14,6 +27,21 @@
     width: 25vw;
     height: 100vh;
     background-color: rgb(182, 212, 218);
+}
+
+.scheduleInput {
+    width: 6%;
+}
+
+.scheduleBtn::before {
+    content: "⏰";
+}
+
+/* adicionar projeto */
+
+.genericDiv label {
+    width: 100%;
+    background-color: aquamarine;
 }
 
 #tempDiv {
@@ -31,7 +59,29 @@
 /*botões da barra lateral*/
 .confirmScheduleBtn {
     background-color: aquamarine;
+
 }
+/* botões do adicionar projeto */
+
+#ProjectDiv {
+    position:relative;
+    width: 300px;
+    border: 2px solid black;
+    height: 200px;
+}
+
+#setProjectBtn {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+}
+
+#addToProjectBtn::before {
+    content: "+";
+
+}
+
+
 
 /* estilos do conteudo principal */
 
@@ -48,12 +98,14 @@
     border: 2px solid black;
 }
 
-h2 {
+.title {
     display: flex;
     width: 100%;
     background-color: rgb(182, 212, 218);
     align-self: flex-start; 
     justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
 
 }
 

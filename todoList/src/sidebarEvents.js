@@ -46,14 +46,12 @@ export function addTaskFromSidebar(tempButton) {
 }
 createSidebarInput();
 
-//vai receber um input com valores de data e mes da funçao de criar projeto
-//git statu
+
 export function createSetDateBtn (divToAppend){
 
     const scheduleBtn = document.createElement("button")
     scheduleBtn.classList = "scheduleBtn"
-    const div = divToAppend //ou tentar algo com document.queryselector, se o seletor não pegar
-
+    //se falhar, tentar verificar o conteudo armazenado em divToAppend pra ver se é um nodeelement
     
     scheduleBtn.addEventListener("click", () =>{
         
@@ -63,6 +61,7 @@ export function createSetDateBtn (divToAppend){
         
         const dayScheduleInput  = document.createElement("input")
         dayScheduleInput.id = "dayScheduleInput"
+        dayScheduleInput.classList = "scheduleInput"
         
         const monthScheduleLabel = document.createElement("label")
         monthScheduleLabel.htmlFor = "monthScheduleLabel"
@@ -70,9 +69,11 @@ export function createSetDateBtn (divToAppend){
         
         const monthScheduleInput  = document.createElement("input")
         monthScheduleInput.id = "monthScheduleInput"
+        monthScheduleInput.classList = "scheduleInput"
         
         const confirmScheduleBtn = document.createElement("button")
-        scheduleBtn.classList = "confirmScheduleBtn"
+        confirmScheduleBtn.classList = "confirmScheduleBtn genericConfirmBtn"
+        
         
         
         confirmScheduleBtn.addEventListener("click", () =>{
@@ -86,8 +87,84 @@ export function createSetDateBtn (divToAppend){
             
             return scheduleDate
         })
-        div.append(dayScheduleLabel,dayScheduleInput,monthScheduleLabel,monthScheduleInput,confirmScheduleBtn)
+        divToAppend.append(dayScheduleLabel,dayScheduleInput,monthScheduleLabel,monthScheduleInput,confirmScheduleBtn)
     })
     
-    div.appendChild(scheduleBtn)
+    divToAppend.appendChild(scheduleBtn)
 }
+
+function createProject (){
+
+    const ProjectBtn = document.querySelector("#newProjectBtn")
+
+    ProjectBtn.addEventListener("click", () =>{
+        
+        const newProjectFirstBox = document.createElement("div")
+        newProjectFirstBox.classList = "genericDiv"
+
+        const newProjectLabel = document.createElement("label")
+        newProjectLabel.htmlFor = "newProjectLabel"
+        newProjectLabel.textContent = "Nome do projeto:"
+        
+        const newProjectInput  = document.createElement("input")
+        newProjectInput.id = "newProjectInput"
+
+        const confirmProjectBtn = document.createElement("button")
+        confirmProjectBtn.id = "confirmProjectBtn"
+        confirmProjectBtn.classList = "genericBtn genericConfirmBtn"
+
+
+        const ganchoRenomear = document.querySelector("#newProjectDiv")
+
+        newProjectFirstBox.append(newProjectLabel, newProjectInput,confirmProjectBtn)
+        ganchoRenomear.appendChild(newProjectFirstBox)
+
+            confirmProjectBtn.addEventListener("click", () =>{
+                const projectName = document.querySelector("#newProjectInput").value
+
+                const div = document.createElement("div")
+                div.id = "ProjectDiv" //jogar nessa
+                
+                
+                const p = document.createElement("p")
+                p.classList = "title"
+                p.textContent = projectName
+                
+                const newProjectInput  = document.createElement("input")
+                newProjectInput.id = "ProjectInput"
+                
+                const addToProjectBtn = document.createElement("button")
+                addToProjectBtn.id = "addToProjectBtn"
+                
+                const setProjectBtn = document.createElement("button")
+                setProjectBtn.id = "setProjectBtn"
+                setProjectBtn.classList = "genericConfirmBtn"
+                
+                
+                div.append(p, newProjectInput, addToProjectBtn, setProjectBtn)
+                createSetDateBtn(div)
+                ganchoRenomear.appendChild(div)
+
+
+                    addToProjectBtn.addEventListener("click", () =>{
+                        const ProjectTask = document.querySelector("#ProjectInput").value
+
+                        const div1 = document.createElement("div")
+                        // div.id = "ProjectDiv"
+
+                        const span = document.createElement("span")
+                        span.textContent = ProjectTask
+
+                        div1.append(span)
+                        div.appendChild(div1)
+                    })
+
+            })
+            
+        })
+
+
+
+}
+
+createProject ()

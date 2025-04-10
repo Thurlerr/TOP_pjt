@@ -5,6 +5,7 @@ import { populateStorage } from "./storage.js"
 //para o accordion
 import Accordion from "accordion-js";
 import "accordion-js/dist/accordion.min.css";
+import { createPendingProject } from "./mainContent"
 
 const addTaskDiv = document.querySelector("#taskDiv")
 const addTaskButton = document.querySelector("#addTask")
@@ -149,7 +150,7 @@ export function createSetDateBtn (divToAppend, callBackVarBridge){
                 projects[projectName] = {}
                 let selectedDate = null
 
-                
+                let acc
                 createSetDateBtn(div, (date) => { //executada quando botão de confirmar dentro do clock for clicado
                     if (!projects[projectName]["taskDate"]) projects[projectName]["taskDate"] =[]
                     selectedDate = date
@@ -177,37 +178,37 @@ export function createSetDateBtn (divToAppend, callBackVarBridge){
                         div.appendChild(div1)
                     })
 
-                    // setProjectBtn.addEventListener("click", () =>{
-                    //     const projectToggle = 
-                    //     createPendingTask(spanValue)
+                    setProjectBtn.addEventListener("click", () =>{
+                        const accordionContainer = document.createElement("div");
+                        accordionContainer.classList.add("accordion");
+                        
+                        let keyTitle = Object.keys(projects)
 
-                    // }) CONSTRUINDO ACCORDION
+                        accordionContainer.innerHTML = `
+                        <div class="ac">
+                            <h2 class="ac-header">
+                            <button type="button" class="ac-trigger">${keyTitle}</button>
+                            </h2>
+                            <div class="ac-panel">
+                             ${projects[keyTitle].taskText.map(task => `<p class="ac-text">${task}</p>`).join("")}
+                            </div>
+                        </div>
+                        `;
+                        createPendingProject(accordionContainer)
+                        //  Inicializa o acordeon
+                        if (acc) acc.destroy(); // remove os listeners antigos
+                         acc = new Accordion(accordionContainer, {
+                            duration: 300,
+                            showMultiple: true
+                          });
+
+                    }) 
             })
 
     }
 
-    const accordionContainer = document.createElement("div");
-    accordionContainer.classList.add("accordion");
-    
-    let keyTitle = Object.keys(projects)
 
-    accordionContainer.innerHTML = `
-      <div class="ac">
-        <h2 class="ac-header">
-          <button type="button" class="ac-trigger">${keyTitle}</button>
-        </h2>
-        <div class="ac-panel">
-          <p class="ac-text">Conteúdo do acordeon dinâmico.</p>
-        </div>
-      </div>
-    `;
-    
-    document.querySelector("#pendingTask").appendChild(accordionContainer);
-    
-    // Inicializa o acordeon
-    new Accordion(accordionContainer, {
-      duration: 300,
-      showMultiple: false
-    });
+   
+   
     
 

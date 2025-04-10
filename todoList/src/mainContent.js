@@ -29,6 +29,33 @@ export function createPendingTask(spanValue){
     populateStorage()
 }
 
+export function createPendingProject(innerAccordeon){
+    const pendingTask = document.querySelector("#pendingTask")
+
+    const tempDiv = document.createElement("div")
+    tempDiv.classList = "pDivTask"
+    
+    let tempSpan
+    tempSpan = innerAccordeon
+    tempSpan.classList = "pTask"
+    
+    const doneButton = document.createElement("button")
+    doneButton.id = "doneButton"
+
+
+    tempDiv.append(tempSpan,doneButton)
+    pendingTask.insertAdjacentElement("beforeend", tempDiv)
+    // addDeleteButton(tempDiv)
+
+    const editableSpan = pendingTask.lastChild.querySelector("span")
+    // editTaskSpan(editableSpan)
+    // addDeleteButton(tempDiv)
+
+    // markTaskAsDone()
+    // storeTaskData() 
+    // populateStorage()
+}
+
 //move tarefa do pendente para concluída, selecionando todos os doneButtons e adicionando eventos a cada um
 //utilizando forEach. o forEach itera sobre cada elemento da nodelist capturada pra adicionar um evento onde
 //pega o pai do elemento clicado (vai pegar a pTaskDiv, criada dinamicamente por outra função), e em seguida extrai

@@ -2,6 +2,9 @@ import { createPendingTask } from "./mainContent"
 import { addDeleteButton } from "./mainContent"
 import { storeTaskData } from "./storage.js"
 import { populateStorage } from "./storage.js"
+//para o accordion
+import Accordion from "accordion-js";
+import "accordion-js/dist/accordion.min.css";
 
 const addTaskDiv = document.querySelector("#taskDiv")
 const addTaskButton = document.querySelector("#addTask")
@@ -39,9 +42,6 @@ export function addTaskFromSidebar(tempButton) {
     
      storeTaskData()
     populateStorage()
-
-    //alg : por default, seta a tarefa pra hoje
-    //alg : há um botão responsável por abrir um input e especificar data para fazer a tarefa
 })
 }
 createSidebarInput();
@@ -93,17 +93,17 @@ export function createSetDateBtn (divToAppend, callBackVarBridge){
     divToAppend.appendChild(scheduleBtn)
 }
 
-let projects = {
+    let projects = {
 	// taskTitle: {  //(retorno de #confirmProjectBtn)
 	// 	taskText: "", //(retorno de #addToProjectBtn),
   	// 	taskDate: "" //(retorno de .confirmScheduleBtn)
 	// },
-}
+    }
 
-const newProjectBtn = document.querySelector("#newProjectBtn")
+    const newProjectBtn = document.querySelector("#newProjectBtn")
     newProjectBtn.addEventListener("click", () => createProject ())
-function createProject (){
-    projects = {} //reseta o obj toda vez que a função é chamada
+        function createProject (){
+        projects = {} //reseta o obj toda vez que a função é chamada
 
     
         const newProjectFirstBox = document.createElement("div")
@@ -149,10 +149,12 @@ function createProject (){
                 projects[projectName] = {}
                 let selectedDate = null
 
-                createSetDateBtn(div, (date) => {
-                selectedDate = date
-                projects[projectName]["taskDate"] = selectedDate
-                console.log("Data atribuída ao projeto:", selectedDate)
+                
+                createSetDateBtn(div, (date) => { //executada quando botão de confirmar dentro do clock for clicado
+                    if (!projects[projectName]["taskDate"]) projects[projectName]["taskDate"] =[]
+                    selectedDate = date
+                    projects[projectName]["taskDate"].push(selectedDate)
+                    console.log("Data atribuída ao projeto:", selectedDate)
                 })
 
                 div.append(p, newProjectInput, addToProjectBtn, setProjectBtn)
@@ -174,6 +176,38 @@ function createProject (){
                         div1.append(span)
                         div.appendChild(div1)
                     })
+
+                    // setProjectBtn.addEventListener("click", () =>{
+                    //     const projectToggle = 
+                    //     createPendingTask(spanValue)
+
+                    // }) CONSTRUINDO ACCORDION
             })
-}
+
+    }
+
+    const accordionContainer = document.createElement("div");
+    accordionContainer.classList.add("accordion");
+    
+    let keyTitle = Object.keys(projects)
+
+    accordionContainer.innerHTML = `
+      <div class="ac">
+        <h2 class="ac-header">
+          <button type="button" class="ac-trigger">${keyTitle}</button>
+        </h2>
+        <div class="ac-panel">
+          <p class="ac-text">Conteúdo do acordeon dinâmico.</p>
+        </div>
+      </div>
+    `;
+    
+    document.querySelector("#pendingTask").appendChild(accordionContainer);
+    
+    // Inicializa o acordeon
+    new Accordion(accordionContainer, {
+      duration: 300,
+      showMultiple: false
+    });
+    
 

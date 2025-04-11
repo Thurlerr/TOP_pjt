@@ -128,6 +128,7 @@ export function createSetDateBtn (divToAppend, callBackVarBridge){
         ganchoRenomear.appendChild(newProjectFirstBox)
 
             confirmProjectBtn.addEventListener("click", () =>{
+                
                 const projectName = document.querySelector("#newProjectInput").value
 
                 const div = document.createElement("div")
@@ -182,7 +183,7 @@ export function createSetDateBtn (divToAppend, callBackVarBridge){
                         const accordionContainer = document.createElement("div");
                         accordionContainer.classList.add("accordion");
                         
-                        let keyTitle = Object.keys(projects)
+                        let keyTitle = projectName
 
                         accordionContainer.innerHTML = `
                         <div class="ac">
@@ -199,11 +200,11 @@ export function createSetDateBtn (divToAppend, callBackVarBridge){
                         if (acc) acc.destroy(); // remove os listeners antigos
                          acc = new Accordion(accordionContainer, {
                             duration: 300,
-                            showMultiple: true
+                            showMultiple: true //teste
                           });
 
                     }) 
-            })
+        })
 
     }
 
